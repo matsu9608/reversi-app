@@ -1,0 +1,49 @@
+<mxfile host="65bd71144e">
+    <diagram id="cUtIY_VvKhF684kmWyzW" name="ページ1">
+        <mxGraphModel dx="1386" dy="702" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="12" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="60" y="110" width="340" height="330" as="geometry"/>
+                </mxCell>
+                <mxCell id="2" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="470" y="110" width="370" height="330" as="geometry"/>
+                </mxCell>
+                <mxCell id="3" value="" style="endArrow=none;html=1;exitX=-0.006;exitY=0.148;exitDx=0;exitDy=0;exitPerimeter=0;entryX=1.012;entryY=0.148;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="2" target="2">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="190" y="380" as="sourcePoint"/>
+                        <mxPoint x="240" y="330" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="4" value="リバーシで学ぶアプリケーション設計入門" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="70" y="110" width="300" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" value="対戦する" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="170" y="200" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="6" value="過去の対戦結果" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="95" y="280" width="270" height="130" as="geometry"/>
+                </mxCell>
+                <mxCell id="9" value="リバーシで学ぶアプリケーション設計入門" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="480" y="120" width="300" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="10" value="自分の番はスキップです" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="565" y="180" width="150" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="11" value="盤面" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="510" y="260" width="270" height="130" as="geometry"/>
+                </mxCell>
+                <mxCell id="13" value="次は黒の番です" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="495" y="400" width="300" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="14" value="" style="endArrow=none;html=1;exitX=0.009;exitY=0.142;exitDx=0;exitDy=0;exitPerimeter=0;entryX=1.003;entryY=0.13;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="12" target="12">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="100" y="160" as="sourcePoint"/>
+                        <mxPoint x="446" y="160" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
