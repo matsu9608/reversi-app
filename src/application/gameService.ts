@@ -1,53 +1,34 @@
-import mysql from "mysql2/promise";
-import { GameGateway } from "../dataaccess/gameGateway";
-import { connectMySQL } from "../dataaccess/connection";
-import { DARK, INITIAL_BOARD } from "../application/constants";
+import { connectMySQL } from '../dataaccess/connection'
+import { GameGateway } from '../dataaccess/gameGateway'
+import { SquareGateway } from '../dataaccess/squareGateway'
+import { TurnGateway } from '../dataaccess/turnGateway'
+import { DARK, INITIAL_BOARD } from './constants'
 
-const gameGateway = new GameGateway();
+const gameGateway = new GameGateway()
+const turnGateway = new TurnGateway()
+const squareGateway = new SquareGateway()
 
 export class GameService {
   async startNewGame() {
-    const now = new Date();
+    const now = new Date()
 
-    const conn = await connectMySQL();
-
+    const conn = await connectMySQL()
     try {
-      await conn.beginTransaction();
+      await conn.beginTransaction()
 
-      const gamerecord = await gameGateway.insert(conn, now);
+      const gameRecord = await gameGateway.insert(conn, now)
+      const turnRecord = await turnGateway.insert(
+        conn,
+        gameRecord.id,
+        0,
+        DARK,
+        now
+      )
+      await squareGateway.insertAll(conn, turnRecord.id, INITIAL_BOARD)
 
-      const turnInsertResult = await conn.execute<mysql.ResultSetHeader>(
-        "insert into turns (game_id, turn_count, next_disc, end_at) values (?, ?, ?, ?)",
-        [gamerecord.id, 0, DARK, now]
-      );
-      const turnId = turnInsertResult[0].insertId;
-
-      const squareCount = INITIAL_BOARD.map((line) => line.length).reduce(
-        (v1, v2) => v1 + v2,
-        0
-      );
-
-      const squaresInsertSql =
-        "insert into squares (turn_id, x, y, disc) values " +
-        Array.from(Array(squareCount))
-          .map(() => "(?, ?, ?, ?)")
-          .join(", ");
-
-      const squaresInsertValues: any[] = [];
-      INITIAL_BOARD.forEach((line, y) => {
-        line.forEach((disc, x) => {
-          squaresInsertValues.push(turnId);
-          squaresInsertValues.push(x);
-          squaresInsertValues.push(y);
-          squaresInsertValues.push(disc);
-        });
-      });
-
-      await conn.execute(squaresInsertSql, squaresInsertValues);
-
-      await conn.commit();
+      await conn.commit()
     } finally {
-      await conn.end();
+      await conn.end()
     }
   }
 }

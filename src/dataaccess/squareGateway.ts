@@ -6,7 +6,6 @@ export class SquareGateway {
     conn: mysql.Connection,
     turnId: number
   ): Promise<SquareRecord[]> {
-    
     const squaresSelectResult = await conn.execute<mysql.RowDataPacket[]>(
       `select id, turn_id, x, y, disc from squares where turn_id = ?`,
       [turnId]

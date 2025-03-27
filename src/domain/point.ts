@@ -1,11 +1,11 @@
-export class Point{
-  constructor(private _x: number, _y: number){}
+export class Point {
+  constructor(private _x: number, private _y: number) {}
 
-  get x(){
+  get x() {
     return this._x
   }
 
-  get y(){
-    return this._x
+  get y() {
+    return this._y
   }
 }

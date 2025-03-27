@@ -15,7 +15,7 @@ export class TurnRecord {
     return this._nextDisc
   }
 
-  get endAt(){
+  get endAt() {
     return this._endAt
   }
 }
