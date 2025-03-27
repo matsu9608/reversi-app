@@ -1,37 +1,37 @@
-import { connectMySQL } from '../dataaccess/connection'
-import { GameGateway } from '../dataaccess/gameGateway'
-import { TurnRepository } from '../domain/turn/turnRepository'
-import { firstTurn } from '../domain/turn/turn'
-import { GameRepository } from '../domain/game/gameRepository'
-import { Game } from '../domain/game/game'
+import { connectMySQL } from "../infrastructure/connection";
+import { GameGateway } from "../infrastructure/gameGateway";
+import { TurnRepository } from "../domain/turn/turnRepository";
+import { firstTurn } from "../domain/turn/turn";
+import { GameRepository } from "../domain/game/gameRepository";
+import { Game } from "../domain/game/game";
 
-const gameGateway = new GameGateway()
+const gameGateway = new GameGateway();
 
-const turnRepository = new TurnRepository()
+const turnRepository = new TurnRepository();
 
-const gameRepository = new GameRepository() 
+const gameRepository = new GameRepository();
 
 export class GameService {
   async startNewGame() {
-    const now = new Date()
+    const now = new Date();
 
-    const conn = await connectMySQL()
+    const conn = await connectMySQL();
 
     try {
-      await conn.beginTransaction()
+      await conn.beginTransaction();
 
-      const game = await gameRepository.save(conn,new Game(undefined, now))
-      
-      if (!game.id){
-        throw new Error('game.id not exist')
+      const game = await gameRepository.save(conn, new Game(undefined, now));
+
+      if (!game.id) {
+        throw new Error("game.id not exist");
       }
-      const turn = firstTurn(game.id, now)
+      const turn = firstTurn(game.id, now);
 
-      await turnRepository.save(conn, turn)
+      await turnRepository.save(conn, turn);
 
-      await conn.commit()
+      await conn.commit();
     } finally {
-      await conn.end()
+      await conn.end();
     }
   }
 }
