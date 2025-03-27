@@ -1,11 +1,15 @@
 import { connectMySQL } from '../dataaccess/connection'
 import { GameGateway } from '../dataaccess/gameGateway'
-import { TurnRepository } from '../domain/turnRepository'
-import { firstTurn } from '../domain/turn'
+import { TurnRepository } from '../domain/turn/turnRepository'
+import { firstTurn } from '../domain/turn/turn'
+import { GameRepository } from '../domain/game/gameRepository'
+import { Game } from '../domain/game/game'
 
 const gameGateway = new GameGateway()
 
 const turnRepository = new TurnRepository()
+
+const gameRepository = new GameRepository() 
 
 export class GameService {
   async startNewGame() {
@@ -16,9 +20,12 @@ export class GameService {
     try {
       await conn.beginTransaction()
 
-      const gameRecord = await gameGateway.insert(conn, now)
-
-      const turn = firstTurn(gameRecord.id, now)
+      const game = await gameRepository.save(conn,new Game(undefined, now))
+      
+      if (!game.id){
+        throw new Error('game.id not exist')
+      }
+      const turn = firstTurn(game.id, now)
 
       await turnRepository.save(conn, turn)
 
