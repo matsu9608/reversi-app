@@ -25,7 +25,10 @@ export class TurnRepository {
       turnCount
     );
     if (!turnRecord) {
-      throw new DomainError("SpecifiedTuenNotFound","Specified turn not found");
+      throw new DomainError(
+        "SpecifiedTuenNotFound",
+        "Specified turn not found"
+      );
     }
 
     const squareRecords = await squareGateway.findForTurnId(
@@ -46,10 +49,13 @@ export class TurnRepository {
       );
     }
 
+    const nextDisc =
+      turnRecord.nextDisc === null ? undefined : toDisc(turnRecord.nextDisc);
+
     return new Turn(
       gameId,
       turnCount,
-      toDisc(turnRecord.nextDisc),
+      nextDisc,
       move,
       new Board(board),
       turnRecord.endAt
