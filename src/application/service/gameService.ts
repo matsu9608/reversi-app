@@ -1,9 +1,9 @@
-import { connectMySQL } from "../infrastructure/connection";
-import { GameGateway } from "../infrastructure/gameGateway";
-import { TurnRepository } from "../domain/turn/turnRepository";
-import { firstTurn } from "../domain/turn/turn";
-import { GameRepository } from "../domain/game/gameRepository";
-import { Game } from "../domain/game/game";
+import { connectMySQL } from "../../infrastructure/connection";
+import { GameGateway } from "../../infrastructure/gameGateway";
+import { TurnRepository } from "../../domain/model/turn/turnRepository";
+import { firstTurn } from "../../domain/model/turn/turn";
+import { GameRepository } from "../../domain/model/game/gameRepository";
+import { Game } from "../../domain/model/game/game";
 
 const gameGateway = new GameGateway();
 
@@ -23,7 +23,7 @@ export class GameService {
       const game = await gameRepository.save(conn, new Game(undefined, now));
 
       if (!game.id) {
-        throw new Error("game.id not exist");
+        throw new Error("game.id is not exist");
       }
       const turn = firstTurn(game.id, now);
 
