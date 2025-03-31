@@ -5,6 +5,7 @@ type DomainErrorType =
   | 'SpecifiedTuenNotFound'
   | 'InvalidPoint'
   | 'InvalidDiscValue'
+  | 'InvalidWinnerDiscValue'
 
 export class DomainError extends Error {
   constructor(private _type: DomainErrorType, message: string) {

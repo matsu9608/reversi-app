@@ -1,4 +1,5 @@
 import { DomainError } from "../../error/domainError";
+import { WinnerDisc } from "../gameResult/winnerDisc";
 import { Board, initialBoard } from "./board";
 import { Disc } from "./disc";
 import { Move } from "./move";
@@ -17,15 +18,17 @@ export class Turn {
   placeNext(disc: Disc, point: Point): Turn {
     // 打とうとした石が、次の石ではない場合、置くことはできない
     if (disc !== this._nextDisc) {
-      throw new DomainError("SelectedDiscIsNotNextDisc","Selected Disc Is Not Next Disc");
+      throw new DomainError(
+        "SelectedDiscIsNotNextDisc",
+        "Selected Disc Is Not Next Disc"
+      );
     }
 
     const move = new Move(disc, point);
 
     const nextBoard = this._board.place(move);
 
-    // TODO 次の石が置けない場合はスキップする処理
-    const nextDisc = this.decideNextDisc(nextBoard, disc)
+    const nextDisc = this.decideNextDisc(nextBoard, disc);
 
     disc === Disc.Dark ? Disc.Light : Disc.Dark;
 
@@ -39,19 +42,36 @@ export class Turn {
     );
   }
 
-  private decideNextDisc(board: Board, previousDisc: Disc): Disc | undefined{
-      const existDarkValidMove = board.existValidMove(Disc.Dark)
-      const existLightValidMove = board.existValidMove(Disc.Light)
+  gameEnded():boolean{
+    return this.nextDisc === undefined
+  }
 
-      if (existDarkValidMove && existLightValidMove){
-        return previousDisc == Disc.Dark ? Disc.Light : Disc.Dark
-      }else if(!existDarkValidMove && !existLightValidMove){
-        return undefined
-      }else if (existDarkValidMove){
-        return Disc.Dark
-      }else{
-        return Disc.Light
-      }
+  winnerDisc(): WinnerDisc{
+    const darkCount = this._board.count(Disc.Dark)
+    const lightCount = this._board.count(Disc.Light)
+
+    if (darkCount === lightCount){
+      return WinnerDisc.Draw
+    }else if(darkCount > lightCount){
+      return WinnerDisc.Dark
+    }else{
+      return WinnerDisc.Light
+    }
+  }
+
+  private decideNextDisc(board: Board, previousDisc: Disc): Disc | undefined {
+    const existDarkValidMove = board.existValidMove(Disc.Dark);
+    const existLightValidMove = board.existValidMove(Disc.Light);
+
+    if (existDarkValidMove && existLightValidMove) {
+      return previousDisc == Disc.Dark ? Disc.Light : Disc.Dark;
+    } else if (!existDarkValidMove && !existLightValidMove) {
+      return undefined;
+    } else if (existDarkValidMove) {
+      return Disc.Dark;
+    } else {
+      return Disc.Light;
+    }
   }
 
   get gameId() {
