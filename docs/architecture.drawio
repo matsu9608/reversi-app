@@ -10,7 +10,7 @@
                 <mxCell id="3" value="application" style="shape=folder;fontStyle=1;spacingTop=10;tabWidth=40;tabHeight=14;tabPosition=left;html=1;verticalAlign=top;fillColor=none;" parent="1" vertex="1">
                     <mxGeometry x="400" y="80" width="280" height="360" as="geometry"/>
                 </mxCell>
-                <mxCell id="4" value="dataaccess" style="shape=folder;fontStyle=1;spacingTop=10;tabWidth=40;tabHeight=14;tabPosition=left;html=1;verticalAlign=top;fillColor=none;" parent="1" vertex="1">
+                <mxCell id="4" value="infrastructure" style="shape=folder;fontStyle=1;spacingTop=10;tabWidth=40;tabHeight=14;tabPosition=left;html=1;verticalAlign=top;fillColor=none;" parent="1" vertex="1">
                     <mxGeometry x="720" y="80" width="280" height="360" as="geometry"/>
                 </mxCell>
                 <mxCell id="5" value="Router" style="html=1;" parent="1" vertex="1">
@@ -88,7 +88,7 @@
                 <mxCell id="21" value="application" style="shape=folder;fontStyle=1;spacingTop=10;tabWidth=40;tabHeight=14;tabPosition=left;html=1;verticalAlign=top;fillColor=none;" parent="1" vertex="1">
                     <mxGeometry x="400" y="460" width="280" height="360" as="geometry"/>
                 </mxCell>
-                <mxCell id="22" value="dataaccess" style="shape=folder;fontStyle=1;spacingTop=10;tabWidth=40;tabHeight=14;tabPosition=left;html=1;verticalAlign=top;fillColor=none;" parent="1" vertex="1">
+                <mxCell id="22" value="infrastructure" style="shape=folder;fontStyle=1;spacingTop=10;tabWidth=40;tabHeight=14;tabPosition=left;html=1;verticalAlign=top;fillColor=none;" parent="1" vertex="1">
                     <mxGeometry x="1040" y="460" width="280" height="360" as="geometry"/>
                 </mxCell>
                 <mxCell id="23" value="Router" style="html=1;" parent="1" vertex="1">
@@ -175,7 +175,7 @@
                 <mxCell id="45" value="application" style="shape=folder;fontStyle=1;spacingTop=10;tabWidth=40;tabHeight=14;tabPosition=left;html=1;verticalAlign=top;fillColor=none;" parent="1" vertex="1">
                     <mxGeometry x="400" y="870" width="280" height="360" as="geometry"/>
                 </mxCell>
-                <mxCell id="46" value="dataaccess" style="shape=folder;fontStyle=1;spacingTop=10;tabWidth=40;tabHeight=14;tabPosition=left;html=1;verticalAlign=top;fillColor=none;" parent="1" vertex="1">
+                <mxCell id="46" value="infrastructure" style="shape=folder;fontStyle=1;spacingTop=10;tabWidth=40;tabHeight=14;tabPosition=left;html=1;verticalAlign=top;fillColor=none;" parent="1" vertex="1">
                     <mxGeometry x="1040" y="870" width="280" height="360" as="geometry"/>
                 </mxCell>
                 <mxCell id="47" value="Router" style="html=1;" parent="1" vertex="1">
