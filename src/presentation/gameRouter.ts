@@ -1,17 +1,17 @@
-import express from 'express'
-import { GameService } from '../application/service/gameService'
-import { GameMySQLRepository } from '../infrastructure/repository/game/gameMySQLRepsitory'
-import { TurnMySQLRepository } from '../infrastructure/repository/turn/turnMySQLRepository'
+import express from "express";
+import { StartNewGameUseCase } from "../application/useCase/startNewGameUseCase";
+import { GameMySQLRepository } from "../infrastructure/repository/game/gameMySQLRepsitory";
+import { TurnMySQLRepository } from "../infrastructure/repository/turn/turnMySQLRepository";
 
-export const gameRouter = express.Router()
+export const gameRouter = express.Router();
 
-const gameService = new GameService(
+const startNewGameUseCase = new StartNewGameUseCase(
   new GameMySQLRepository(),
   new TurnMySQLRepository()
-)
+);
 
-gameRouter.post('/api/games', async (req, res) => {
-  await gameService.startNewGame()
+gameRouter.post("/api/games", async (req, res) => {
+  await startNewGameUseCase.run();
 
-  res.status(201).end()
-})
+  res.status(201).end();
+});
