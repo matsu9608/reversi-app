@@ -7,6 +7,9 @@ info:
 paths:
   /api/games:
     get:
+      summary: 対戦履歴を取得する
+      tags: 
+        - 対戦履歴を表示
       responses:
         200:
           description: OK
@@ -23,14 +26,23 @@ paths:
                         id:
                           type: integer
                           example: 1
+                        darkMoveCount:
+                          type: integer
+                          example: 1
+                        lightMoveCount:
+                          type: integer
+                          example: 1
                         winnerDisc:
                           type: integer
                           example: 1
                         startedAt:
                           type: string
                           example: 2017-07-21T17:32:28Z
+                        endAt:
+                          type: string
+                          example: 2017-07-21T17:32:28Z
     post:
-      summary: 対戦を開始する
+      summary: 対戦開始時の初期データを登録する
       tags:
         - 対戦する
       responses:
@@ -45,7 +57,7 @@ paths:
           type: integer
         required: true
     get:
-      summary: 現在の盤面を表示する
+      summary: 現在（指定）の盤面を表示する
       tags:
         - 対戦する
       responses:
@@ -81,6 +93,9 @@ paths:
 
   /api/games/latest/turns:
     post:
+      summary: プレイヤーが盤面に置いた石を登録する
+      tags: 
+        - 対戦する
       requestBody:
         content:
           application/json:
