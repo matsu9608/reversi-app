@@ -48,6 +48,6 @@ function errorHandler(
 
   console.error("Unexpected error occurred", err);
   res.status(500).send({
-    message: "Unexpected error occurred",
+    message: "An unexpected error has occurred. Please try again later or contact support if the issue persists.",
   });
 }
