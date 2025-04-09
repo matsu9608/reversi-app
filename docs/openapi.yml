@@ -72,14 +72,18 @@ paths:
                     type: integer
                     example: 1
                   board:
-                    type: integer
+                    type: array
+                    items:
+                      type: array
+                      items:
+                        type: integer
                     example:
                       [
                         [0, 0, 0, 0, 0, 0, 0, 0],
                         [0, 0, 0, 0, 0, 0, 0, 0],
                         [0, 0, 0, 0, 0, 0, 0, 0],
-                        [0, 0, 0, 0, 0, 0, 0, 0],
-                        [0, 0, 0, 0, 0, 0, 0, 0],
+                        [0, 0, 0, 1, 2, 0, 0, 0],
+                        [0, 0, 0, 2, 1, 0, 0, 0],
                         [0, 0, 0, 0, 0, 0, 0, 0],
                         [0, 0, 0, 0, 0, 0, 0, 0],
                         [0, 0, 0, 0, 0, 0, 0, 0],
@@ -120,3 +124,37 @@ paths:
       responses:
         201:
           description: Created
+  
+  /api/games/latest/turns/{turnCount}/valid-moves:
+    parameters:
+      - name: turnCount
+        in: path
+        schema:
+          type: integer
+        required: true
+    get:
+      summary: 指定したターンで有効な手の一覧を取得する
+      tags:
+        - 対戦する
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  validMoves:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        disc:
+                          type: integer
+                          example: 1
+                        x:
+                          type: integer
+                          example: 2
+                        y:
+                          type: integer
+                          example: 3

@@ -8,5 +8,7 @@ export interface TurnRepository {
     turnCount: number
   ): Promise<Turn>
 
+  findByTurnCount(turnCount: number): Promise<Turn | undefined>
+
   save(conn: mysql.Connection, turn: Turn):Promise<void>
 }

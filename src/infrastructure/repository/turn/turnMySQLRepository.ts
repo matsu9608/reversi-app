@@ -63,6 +63,40 @@ export class TurnMySQLRepository implements TurnRepository {
     );
   }
 
+  async findByTurnCount(turnCount: number): Promise<Turn | undefined> {
+    // Get connection and find the latest game
+    const conn = await mysql.createConnection({
+      host: "mysql",
+      database: "reversi",
+      user: "root",
+      password: ""
+    });
+
+    try {
+      // Get the latest game ID
+      const [games] = await conn.execute<mysql.RowDataPacket[]>(
+        "select id from games order by id desc limit 1"
+      );
+
+      if (games.length === 0) {
+        return undefined;
+      }
+
+      const gameId = games[0].id;
+
+      // Find the turn for this game
+      return await this.findForGameIdAndTurnCount(conn, gameId, turnCount);
+    } catch (e) {
+      // If the turn is not found, return undefined instead of throwing an error
+      if (e instanceof DomainError && e.type === "SpecifiedTuenNotFound") {
+        return undefined;
+      }
+      throw e;
+    } finally {
+      await conn.end();
+    }
+  }
+
   async save(conn: mysql.Connection, turn: Turn) {
     const turnRecord = await turnGateway.insert(
       conn,

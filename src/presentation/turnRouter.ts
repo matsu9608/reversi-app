@@ -1,6 +1,7 @@
 import express from "express";
 import { RegisterTurnUseCase } from "../application/useCase/registerTurnUseCase";
 import { FindLatestGameTurnByTurnCountUseCase } from "../application/useCase/findLatestGameTurnByTurnCountUseCase";
+import { FindValidMovesUseCase } from "../application/useCase/findValidMovesUseCase";
 import { Point } from "../domain/model/turn/point";
 import { toDisc } from "../domain/model/turn/disc";
 import { GameMySQLRepository } from "../infrastructure/repository/game/gameMySQLRepsitory";
@@ -13,6 +14,10 @@ const findLatestGameTurnByTurnCountUseCase = new FindLatestGameTurnByTurnCountUs
   new TurnMySQLRepository(),
   new GameMySQLRepository(),
   new GameResultMySQLRepository()
+);
+
+const findValidMovesUseCase = new FindValidMovesUseCase(
+  new TurnMySQLRepository()
 );
 
 const registerTurnUseCase = new RegisterTurnUseCase(
@@ -65,5 +70,28 @@ turnRouter.post(
     await registerTurnUseCase.run(turnCount, disc, point);
 
     res.status(201).end();
+  }
+);
+
+interface ValidMovesResponseBody {
+  validMoves: {
+    disc: number;
+    x: number;
+    y: number;
+  }[];
+}
+
+turnRouter.get(
+  "/api/games/latest/turns/:turnCount/valid-moves",
+  async (req, res: express.Response<ValidMovesResponseBody>) => {
+    const turnCount = parseInt(req.params.turnCount);
+
+    const validMoves = await findValidMovesUseCase.run(turnCount);
+
+    const responseBody = {
+      validMoves: validMoves
+    };
+
+    res.json(responseBody);
   }
 );

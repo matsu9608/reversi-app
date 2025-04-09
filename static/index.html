@@ -10,7 +10,9 @@
       <h1>リバーシで学ぶアプリケーション設計入門</h1>
     </header>
     <main>
-      <a href="/game/">対戦する</a>
+      <a href="/game/" class="play-button">対戦する</a>
+      
+      <h2 class="game-history-title">対戦履歴</h2>
       <table>
         <thead>
           <tr>
@@ -21,14 +23,8 @@
             <th>対戦終了時刻</th>
           </tr>
         </thead>
-        <tbody id="game-tabel-body">
-          <tr>
-            <td>1</td>
-            <td>1</td>
-            <td>1</td>
-            <td>2017-07-21T17:32:28Z</td>
-            <td>2017-07-21T17:32:28Z</td>
-          </tr>
+        <tbody id="game-table-body">
+          <!-- Game history will be loaded dynamically -->
         </tbody>
       </table>
     </main>

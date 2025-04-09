@@ -17,36 +17,33 @@ app.use(express.json());
 app.use(gameRouter);
 app.use(turnRouter);
 
+// Improved error handling middleware
 app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(`Reversi application started: http://localhost:${PORT}`);
 });
 
+// Enhanced error handler with specific error types
 function errorHandler(
-  err: any,
+  err: unknown, // Use 'unknown' for better type safety
   _req: express.Request,
   res: express.Response,
   _next: express.NextFunction
 ) {
-
-  if (err instanceof DomainError){
-    res.status(400).json({
+  if (err instanceof DomainError) {
+    return res.status(400).json({
       type: err.type,
-      message: err.message
-    })
-    return 
+      message: err.message,
+    });
   }
 
-  if (err instanceof ApplicationError){
-    switch(err.type){
-      case 'LatestGameNotFound':
-        res.status(404).json({
-          type: err.type,
-          message: err.message
-        })
-        return 
-    }
+  if (err instanceof ApplicationError) {
+    const statusCode = err.type === 'LatestGameNotFound' ? 404 : 500; // Default to 500 for other ApplicationErrors
+    return res.status(statusCode).json({
+      type: err.type,
+      message: err.message,
+    });
   }
 
   console.error("Unexpected error occurred", err);

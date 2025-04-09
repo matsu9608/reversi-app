@@ -93,29 +93,36 @@ export class Board {
   }
 
   existValidMove(disc: Disc): boolean {
+    return this.listValidMoves(disc).length > 0;
+  }
+
+  // 有効な手のリストを取得する
+  listValidMoves(disc: Disc): { x: number, y: number }[] {
+    const validMoves: { x: number, y: number }[] = [];
+
     for (let y = 0; y < this._discs.length; y++) {
       const line = this._discs[y];
       for (let x = 0; x < line.length; x++) {
-        const discOnBoard = line[x]
+        const discOnBoard = line[x];
 
         // 空ではない点は無視
-        if( discOnBoard !== Disc.Empty){
-          continue
+        if (discOnBoard !== Disc.Empty) {
+          continue;
         }
 
-        const move = new Move(disc, new Point(x,y))
-        const flipPoints = this.listFlipPoints(move)
+        const move = new Move(disc, new Point(x, y));
+        const flipPoints = this.listFlipPoints(move);
 
-        // ひっくり返せる点がある場合は、置ける場所がある
-        if (flipPoints.length !== 0){
-          return true
+        // ひっくり返せる点がある場合は、有効な手
+        if (flipPoints.length !== 0) {
+          validMoves.push({ x, y });
         }
       }
     }
-    return false;
+    return validMoves;
   }
 
-  count(disc: Disc): number{
+  count(disc: Disc): number {
     return this._discs
     .map((line)=>{
       return line.filter((discOnBoard)=>discOnBoard ===disc).length

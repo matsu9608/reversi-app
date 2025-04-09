@@ -13,8 +13,24 @@
       <div class="warning-message-area">
         <p id="warning-message" class="warning-message">白の番はスキップです</p>
       </div>
+      <div class="game-info">
+        <div class="disc-count">
+          <div class="mini-disc dark"></div>
+          <span id="dark-count">2</span>
+        </div>
+        <div>
+          <p id="next-disc-message">次は黒の番です</p>
+        </div>
+        <div class="disc-count">
+          <div class="mini-disc light"></div>
+          <span id="light-count">2</span>
+        </div>
+      </div>
       <div id="board" class="board"></div>
-      <p id = "next-disc-message">次は黒の番です</p>
+      <div class="controls">
+        <a href="/" class="back-button">戻る</a>
+        <button id="new-game-button" class="new-game-button">新しいゲーム</button>
+      </div>
     </main>
     <script src="main.js"></script>
   </body>
