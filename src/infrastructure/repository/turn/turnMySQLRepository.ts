@@ -118,4 +118,52 @@ export class TurnMySQLRepository implements TurnRepository {
       );
     }
   }
+
+  async findLatestForGame(
+    conn: mysql.Connection,
+    gameId: number
+  ): Promise<Turn | undefined> {
+    const turnRecord = await turnGateway.findLatest(conn, gameId)
+    if (!turnRecord) {
+      return undefined
+    }
+
+    const squareRecords = await squareGateway.findForTurnId(
+      conn,
+      turnRecord.id
+    )
+    const board = Array.from(Array(8)).map(() => Array.from(Array(8)))
+    squareRecords.forEach((s) => {
+      board[s.y][s.x] = s.disc
+    })
+
+    const moveRecord = await moveGateway.findForTurnId(conn, turnRecord.id)
+    let move: Move | undefined
+    if (moveRecord) {
+      move = new Move(toDisc(moveRecord.disc), new Point(moveRecord.x, moveRecord.y))
+    }
+
+    const nextDisc =
+      turnRecord.nextDisc === null ? undefined : toDisc(turnRecord.nextDisc)
+
+    return new Turn(
+      gameId,
+      turnRecord.turnCount,
+      nextDisc,
+      move,
+      new Board(board),
+      turnRecord.endAt
+    )
+  }
+
+  async delete(conn: mysql.Connection, gameId: number, turnCount: number): Promise<void> {
+    const turnRecord = await turnGateway.findForGameIdAndTurnCount(conn, gameId, turnCount)
+    if (!turnRecord) {
+      throw new DomainError('SpecifiedTuenNotFound', 'Specified turn not found')
+    }
+
+    await moveGateway.deleteForTurnId(conn, turnRecord.id)
+    await squareGateway.deleteForTurnId(conn, turnRecord.id)
+    await turnGateway.delete(conn, turnRecord.id)
+  }
 }

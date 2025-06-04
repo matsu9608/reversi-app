@@ -37,4 +37,8 @@ export class MoveGateway {
       [turnId, disc, x, y]
     )
   }
+
+  async deleteForTurnId(conn: mysql.Connection, turnId: number) {
+    await conn.execute('delete from moves where turn_id = ?', [turnId])
+  }
 }

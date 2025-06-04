@@ -44,4 +44,31 @@ export class TurnGateway {
 
     return new TurnRecord(turnId, gameId, turnCount, nextDisc, endAt)
   }
+
+  async findLatest(
+    conn: mysql.Connection,
+    gameId: number
+  ): Promise<TurnRecord | undefined> {
+    const selectResult = await conn.execute<mysql.RowDataPacket[]>(
+      'select id, game_id, turn_count, next_disc, end_at from turns where game_id = ? order by turn_count desc limit 1',
+      [gameId]
+    )
+    const record = selectResult[0][0]
+
+    if (!record) {
+      return undefined
+    }
+
+    return new TurnRecord(
+      record['id'],
+      record['game_id'],
+      record['turn_count'],
+      record['next_disc'],
+      record['end_at']
+    )
+  }
+
+  async delete(conn: mysql.Connection, turnId: number) {
+    await conn.execute('delete from turns where id = ?', [turnId])
+  }
 }

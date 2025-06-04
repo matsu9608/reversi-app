@@ -31,4 +31,8 @@ export class GameResultMySQLRepository implements GameResultRepository{
       gameResult.endAt
     )
   }
+
+  async deleteForGameId(conn: mysql.Connection, gameId: number) {
+    await gameResultRepository.deleteForGameId(conn, gameId)
+  }
 }
