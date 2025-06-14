@@ -35,4 +35,8 @@ export class GameResultGateway {
       [gameId, winnerDisc, endAt]
     );
   }
+
+  async deleteForGameId(conn: mysql.Connection, gameId: number) {
+    await conn.execute('delete from game_results where game_id = ?', [gameId])
+  }
 }

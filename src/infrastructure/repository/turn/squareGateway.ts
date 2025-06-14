@@ -40,4 +40,8 @@ export class SquareGateway {
 
     await conn.execute(squaresInsertSql, squaresInsertValues)
   }
+
+  async deleteForTurnId(conn: mysql.Connection, turnId: number) {
+    await conn.execute('delete from squares where turn_id = ?', [turnId])
+  }
 }

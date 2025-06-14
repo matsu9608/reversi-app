@@ -12,17 +12,32 @@ const warningMessageElement = document.getElementById("warning-message");
 const darkCountElement = document.getElementById("dark-count");
 const lightCountElement = document.getElementById("light-count");
 const newGameButtonElement = document.getElementById("new-game-button");
+const undoButtonElement = document.getElementById("undo-button");
 
 // Add event listener for new game button
 newGameButtonElement.addEventListener("click", async () => {
   await registerGame();
   await showBoard(0);
+  gameInProgress = true;
+  currentTurnCount = 0;
+  undoButtonElement.disabled = true;
+});
+
+undoButtonElement.addEventListener("click", async () => {
+  if (currentTurnCount === 0) return;
+  const response = await fetch("/api/games/latest/turns/latest", { method: "DELETE" });
+  if (response.ok) {
+    await showBoard(currentTurnCount - 1);
+  }
 });
 
 // Variable to track game state
 let gameInProgress = true;
+let currentTurnCount = 0;
 
 async function showBoard(turnCount, previousDisc) {
+  currentTurnCount = turnCount;
+  undoButtonElement.disabled = currentTurnCount === 0;
   const response = await fetch(`/api/games/latest/turns/${turnCount}`);
   const responseBody = await response.json();
   const board = responseBody.board;
@@ -216,6 +231,8 @@ async function registerTurn(turnCount, disc, x, y) {
 async function main() {
   await registerGame();
   await showBoard(0);
+  gameInProgress = true;
+  currentTurnCount = 0;
 }
 
 main();

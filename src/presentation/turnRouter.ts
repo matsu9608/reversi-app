@@ -7,6 +7,7 @@ import { toDisc } from "../domain/model/turn/disc";
 import { GameMySQLRepository } from "../infrastructure/repository/game/gameMySQLRepsitory";
 import { TurnMySQLRepository } from "../infrastructure/repository/turn/turnMySQLRepository";
 import { GameResultMySQLRepository } from "../infrastructure/repository/gameResult/gameResultMySQLRepository";
+import { UndoLastTurnUseCase } from "../application/useCase/undoLastTurnUseCase";
 
 export const turnRouter = express.Router();
 
@@ -21,6 +22,12 @@ const findValidMovesUseCase = new FindValidMovesUseCase(
 );
 
 const registerTurnUseCase = new RegisterTurnUseCase(
+  new TurnMySQLRepository(),
+  new GameMySQLRepository(),
+  new GameResultMySQLRepository()
+);
+
+const undoLastTurnUseCase = new UndoLastTurnUseCase(
   new TurnMySQLRepository(),
   new GameMySQLRepository(),
   new GameResultMySQLRepository()
@@ -95,3 +102,8 @@ turnRouter.get(
     res.json(responseBody);
   }
 );
+
+turnRouter.delete("/api/games/latest/turns/latest", async (_req, res) => {
+  await undoLastTurnUseCase.run();
+  res.status(200).end();
+});

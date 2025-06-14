@@ -8,4 +8,6 @@ export interface GameResultRepository {
   ): Promise<GameResult | undefined>;
 
   save(conn: mysql.Connection, gameResult: GameResult): Promise<void>;
+
+  deleteForGameId(conn: mysql.Connection, gameId: number): Promise<void>;
 }
